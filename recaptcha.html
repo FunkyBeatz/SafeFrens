@@ -2,19 +2,18 @@
 <html>
 <head>
     <title>reCAPTCHA Verification</title>
-    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=your-recaptcha-site-key"></script>
 </head>
 <body>
-    <div id="recaptcha"></div>
+    <div class="g-recaptcha" data-sitekey="your-recaptcha-site-key" data-callback="onSubmit" data-action="verify"></div>
+    <p id="token"></p>
+    <button onclick="copyToken()">Copy Token</button>
     <script>
-        grecaptcha.ready(function() {
-            grecaptcha.execute('your-recaptcha-site-key', {action: 'verify'}).then(function(token) {
-                document.getElementById('recaptcha').innerHTML = 'Token: ' + token + '<br><button onclick="copyToken()">Copy Token</button>';
-            });
-        });
-
+        function onSubmit(token) {
+            document.getElementById('token').innerText = 'Token: ' + token;
+        }
         function copyToken() {
-            var token = document.getElementById('recaptcha').innerText.split('Token: ')[1].split('<')[0];
+            var token = document.getElementById('token').innerText.split('Token: ')[1];
             navigator.clipboard.writeText(token).then(() => alert('Token copied to clipboard!'));
         }
     </script>
