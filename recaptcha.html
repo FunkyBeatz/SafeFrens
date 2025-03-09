@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>reCAPTCHA Verification</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+</head>
+<body>
+    <div id="recaptcha"></div>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('your-recaptcha-site-key', {action: 'verify'}).then(function(token) {
+                document.getElementById('recaptcha').innerHTML = 'Token: ' + token + '<br><button onclick="copyToken()">Copy Token</button>';
+            });
+        });
+
+        function copyToken() {
+            var token = document.getElementById('recaptcha').innerText.split('Token: ')[1].split('<')[0];
+            navigator.clipboard.writeText(token).then(() => alert('Token copied to clipboard!'));
+        }
+    </script>
+</body>
+</html>
